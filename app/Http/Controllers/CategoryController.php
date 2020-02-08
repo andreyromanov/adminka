@@ -19,6 +19,13 @@ class CategoryController extends Controller
         return response()->json($categories);
     }
 
+    public function display()
+    {
+        $categories = Category::latest('id')->get();
+
+        return view('categories', ['categories' => $categories]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -37,7 +44,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $category = new Category();
+
+        $category->name = $request->name;
+        $category->image = $request->image;
+        $category->description = $request->description;
+
+        $category->save();
+
+        return redirect()->back();
     }
 
     /**
@@ -80,8 +95,12 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Request $request)
     {
-        //
+        $category = Category::find($request->id);
+
+        $category->delete();
+
+        return redirect()->back();
     }
 }

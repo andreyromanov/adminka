@@ -18,3 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/categories', 'CategoryController@display')->name('categories');
+Route::post('/category/create', 'CategoryController@store')->name('category.create');
+Route::post('/category/destroy', 'CategoryController@destroy')->name('category.destroy');
+
+//Route::get('/items', 'ItemController@index')->name('items');
