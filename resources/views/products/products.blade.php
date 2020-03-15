@@ -32,13 +32,17 @@
               <td>{{$product->name}}</td>
               <td>{{$product->description}}</td>
               <th>
-                <form action="{{route('category.destroy')}}" method="POST">
+                <form action="{{route('product.destroy')}}" method="POST" style="display: inline;">
                     @csrf
                     <input type="hidden" name="id" value="{{$product->id}}">
                   <button type="submit" class="btn btn-danger">
                       <i class="fa fa-trash"></i>
                   </button>
                 </form>
+                /
+                <button type="button" class="btn btn-warning">
+                      <i class="fa fa-edit"></i>
+                  </button>
               </th>
             </tr>
             @endforeach
