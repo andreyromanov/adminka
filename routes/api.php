@@ -24,3 +24,5 @@ Route::get('/products', 'ProductController@index');
 
 Route::get('/dressa', 'DressaController@index');
 
+Route::get('/mebtex/catalog', 'MebtexController@index');
+
