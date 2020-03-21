@@ -12,7 +12,9 @@ class MebtexController extends Controller
     public function index()
     {
 
-      $url = 'http://mebtex.com.ua/catalog/';
+      $page = $_GET["page"] ?? 1;
+      
+      $url = 'http://mebtex.com.ua/catalog/page'.$page;
 
       $client = new Client();
 
