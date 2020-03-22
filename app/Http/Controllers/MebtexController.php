@@ -41,8 +41,36 @@ class MebtexController extends Controller
           ];
       	}
 
+        //find pagination
+
+        $pagination_raw = $dom->find('ul[class="page-numbers"]',0)->find('li');
+
+        foreach($pagination_raw as $pag){
+
+          if($pag->find('a')){
+
+            $text = $pag->text();
+
+            $link = $pag->find('a',0)->href;
+
+            $parts = Explode('/', $link);
+            $url = $parts[count($parts) - 2];
+
+            $pagination[] = (object) [
+                "text" => $text,
+                "url" => $url,
+              ];
+          }
+
+        }
+
       }
-      
-      return response()->json($objects);
+
+      $data['data'] = [
+        'products' => $objects,
+        'pagination' => $pagination
+      ];
+    
+      return response()->json($data);
     }
 }
