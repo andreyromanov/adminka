@@ -18,18 +18,8 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
+    public function checkSource($url)
     {
-        $products = Product::count();
-        $categories = Category::count();
-
-        $url = 'http://mebtex.com.ua/catalog/';
-        
         // Создаем дескриптор cURL
         $ch = curl_init();
         curl_setopt ( $ch, CURLOPT_URL, $url );
@@ -45,10 +35,25 @@ class HomeController extends Controller
         curl_close($ch);
 
         if ( ( $http_code == "200" ) ) {
-            $mebtex = 'ok';
+            return 'ok';
           } else {
-            $mebtex = 'not working';
+            return 'not working';
           }
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        $products = Product::count();
+        $categories = Category::count();
+
+        $url = 'http://mebtex.com.ua/catalog/';
+
+        $mebtex = $this->checkSource($url);
 
         return view('welcome', compact('products', 'categories', 'mebtex'));
     }
